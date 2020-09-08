@@ -3,6 +3,8 @@ package ru.list.surkovr.social_network_simple.controllers;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import ru.list.surkovr.social_network_simple.domain.Message;
 import ru.list.surkovr.social_network_simple.domain.Views;
@@ -50,5 +52,12 @@ public class MessageController {
     @DeleteMapping("{id}")
     public void deleteMessage(@PathVariable("id") Message message) {
         messageRepository.delete(message);
+    }
+
+    // Используется Stomp протокол - websocket, rabbitmq, activemq
+    @MessageMapping("/changeMessage")
+    @SendTo("/topic/activity")
+    public Message change(Message message) {
+        return messageRepository.save(message);
     }
 }

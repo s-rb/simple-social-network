@@ -23,3 +23,6 @@ Add script at package-json:
 `"scripts": {
      "start": "webpack-dev-server"
    }`
+   
+StompJs + client install:
+`yarn add sockjs-client @stomp/stompjs`
