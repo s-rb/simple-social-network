@@ -18,11 +18,10 @@ Some dependencies:
 
 More dependencies:
 ` yarn add -D webpack webpack-cli webpack-dev-server babel-loader @babel/core @babel/preset-env vue-loader vue-template-compiler`
-
-Add script at package-json:
-`"scripts": {
-     "start": "webpack-dev-server"
-   }`
    
 StompJs + client install:
 `yarn add sockjs-client @stomp/stompjs`
+
+For Vuetify deps:
+`yarn add -D vue-style-loader css-loader`
+`yarn add vuetify`

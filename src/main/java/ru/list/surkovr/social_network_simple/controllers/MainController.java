@@ -12,6 +12,8 @@ import ru.list.surkovr.social_network_simple.repositories.MessageRepository;
 
 import java.util.HashMap;
 
+import static java.util.Objects.nonNull;
+
 @Controller
 @RequestMapping("/")
 public class MainController {
@@ -30,8 +32,10 @@ public class MainController {
     public String main(Model model, @AuthenticationPrincipal User user) {
         HashMap<Object, Object> data = new HashMap<>();
 
-        data.put("profile", user);
-        data.put("messages", messageRepository.findAll());
+        if (nonNull(user)) {
+            data.put("profile", user);
+            data.put("messages", messageRepository.findAll());
+        }
 
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));
