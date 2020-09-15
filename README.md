@@ -25,3 +25,6 @@ StompJs + client install:
 For Vuetify deps:
 `yarn add -D vue-style-loader css-loader`
 `yarn add vuetify`
+
+`yarn add vuex`
+`yarn add @babel/polyfill`

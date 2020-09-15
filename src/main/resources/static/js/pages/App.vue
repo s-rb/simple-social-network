@@ -19,7 +19,7 @@
           <a href="/login">Google</a>
         </div>
         <div v-if="profile">
-          <messages-list :messages="messages"/>
+          <messages-list/>
         </div>
       </v-container>
     </v-main>
@@ -27,9 +27,9 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import MessagesList from 'components/messages/MessageList.vue';
 import {addHandler} from 'util/ws';
-import {mdiExitToApp} from '@mdi/js';
 
 export default {
   // Vue не любит когда в data сразу помещается объект. Для каждого инстанса будет один и тот же объект.
@@ -38,29 +38,20 @@ export default {
   components: {
     MessagesList,
   },
-  data() {
-    return {
-      messages: frontendData.messages,
-      profile: frontendData.profile,
-      logout: mdiExitToApp,
-    };
-  },
+  computed: mapState(['profile']),
+  methods: mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
   created() {
     addHandler(data => {
           if (data.objectType === 'MESSAGE') {
-            const index = this.messages.findIndex(item => item.id === data.body.id);
-
             switch (data.eventType) {
               case 'CREATE':
+                this.addMessageMutation(data.body)
+                break;
               case 'UPDATE':
-                if (index > -1) {
-                  this.messages.splice(index, 1, data.body);
-                } else {
-                  this.messages.push(data.body);
-                }
+                this.updateMessageMutation(data.body)
                 break;
               case 'REMOVE':
-                this.messages.splice(index, 1);
+                this.removeMessageMutation(data.body)
                 break;
               default:
                 console.error(`Looks like the event type is unknown "${data.eventType}"`);
@@ -69,7 +60,7 @@ export default {
           } else {
             console.error(`Looks like the object type is unknown "${data.objectType}"`);
           }
-        }
+        },
     );
   },
 };
