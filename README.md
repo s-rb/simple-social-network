@@ -29,3 +29,4 @@ For Vuetify deps:
 `yarn add vuex`
 `yarn add @babel/polyfill`
 `yarn add vue-router`
+`yarn add vue-youtube-embed`
