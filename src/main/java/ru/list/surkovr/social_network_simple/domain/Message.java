@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table
@@ -38,6 +39,16 @@ public class Message {
     private String linkDescription;
     @JsonView(Views.FullMessage.class)
     private String linkCover;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonView(Views.FullMessage.class)
+    private User author;
+
+    // orphanRemoval = true - если удаляется сообщение, то все комменты также удаляются
+    @OneToMany(mappedBy = "message", orphanRemoval = true)
+    @JsonView(Views.FullMessage.class)
+    private List<Comment> comments;
 
     public Long getId() {
         return id;

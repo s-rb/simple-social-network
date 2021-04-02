@@ -7,8 +7,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import ru.list.surkovr.social_network_simple.domain.Message;
+import ru.list.surkovr.social_network_simple.domain.User;
 import ru.list.surkovr.social_network_simple.domain.Views;
 import ru.list.surkovr.social_network_simple.dto.EventType;
 import ru.list.surkovr.social_network_simple.dto.MetaDto;
@@ -57,9 +59,11 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message createMsg(@RequestBody Message message) throws IOException {
+    public Message createMsg(@RequestBody Message message,
+                             @AuthenticationPrincipal User user) throws IOException {
         message.setCreationDate(LocalDateTime.now());
         fillMeta(message);
+        message.setAuthor(user);
         Message createdMessage = messageRepository.save(message);
         wsSender.accept(EventType.CREATE, createdMessage);
         return createdMessage;
