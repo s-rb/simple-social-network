@@ -21,14 +21,14 @@ dependencies {
     implementation 'org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.1.0.RELEASE'
     implementation 'org.springframework.session:spring-session-jdbc'
     implementation 'org.postgresql:postgresql'
-    implementation 'org.projectlombok:lombok:1.18.12'
+    implementation 'org.projectlombok:lombok:1.18.28'
     implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'javax.xml.bind:jaxb-api'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
-//    annotationProcessor('org.projectlombok:lombok:1.18.12')
+    annotationProcessor('org.projectlombok:lombok:1.18.28')
 }
 
 test {

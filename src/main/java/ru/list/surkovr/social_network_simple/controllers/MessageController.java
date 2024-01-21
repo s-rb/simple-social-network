@@ -126,11 +126,4 @@ public class MessageController {
         return isNull(element) ? "" : element.attr("content");
 
     }
-
-//    // Используется Stomp протокол - websocket, rabbitmq, activemq
-//    @MessageMapping("/changeMessage")
-//    @SendTo("/topic/activity")
-//    public Message change(Message message) {
-//        return messageRepository.save(message);
-//    }
 }
